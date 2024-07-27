@@ -1,0 +1,23 @@
+package Arrays;
+
+class Solution {
+    public int maxArea(int[] height) {
+        int lP=0;
+        int rP= height.length-1;
+        int maxWater=0;
+        while(lP<rP) {
+            //calculate water area
+            int ht = Math.min(height[lP], height[rP]);
+            int width = rP - lP;
+            int currWater=ht*width;
+            maxWater=Math.max(currWater,maxWater);
+            //updating pointers
+            if (height[lP] < height[rP]) {
+                lP++;
+            } else {
+                rP--;
+            }
+        }
+        return maxWater;
+    }
+}

@@ -1,0 +1,33 @@
+package Graphs;
+
+class Solution {
+    public ArrayList<String> findPath(int[][] mat) {
+        String path="";
+        ArrayList<String>ans=new ArrayList<>();
+        int n=mat.length;
+        if(mat[0][0]==0 || mat[n-1][n-1]==0) return ans;
+        boolean[][] visited=new boolean[n][n];
+        solve(mat,path,ans,0,0,visited);
+        return ans;
+    }
+    private void solve(int[][] mat,String path,ArrayList<String>ans,int x,int y,boolean[][] visited) {
+        int n=mat.length;
+        if(x==n-1 && y==n-1){
+            ans.add(new String(path));
+            return;
+        }
+        //U, R, D, L
+        int[] dRow={-1,0,1,0};
+        int[] dCol={0,1,0,-1};
+        char[] dir={'U','R','D','L'};
+        visited[x][y]=true;
+        for(int i=0;i<4;i++){
+            int nrow=x+dRow[i];
+            int ncol=y+dCol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && !visited[nrow][ncol] && mat[nrow][ncol]==1){
+                solve(mat,path+dir[i],ans,nrow,ncol,visited);
+            }
+        }
+        visited[x][y]=false;
+    }
+}

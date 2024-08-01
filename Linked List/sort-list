@@ -1,0 +1,42 @@
+package Linked List;
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head==null||head.next==null) return head;
+        
+        ListNode slow=head;
+        ListNode fast=head.next;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        ListNode left=head;
+        ListNode right=slow.next;
+        slow.next=null;
+        
+        left=sortList(left);
+        right=sortList(right);
+        
+        return sortedMerge(left,right);
+    }
+    public ListNode sortedMerge(ListNode a,ListNode b){
+        ListNode result=null;
+        if(a==null){
+            return b;
+        }
+        else if(b==null){
+            return a;
+        }
+        //finding minimum node
+        if(a.val<=b.val){
+            result=a;
+            //recur for next node in list
+            result.next=sortedMerge(a.next,b);
+        }
+        else{
+            result=b;
+            result.next=sortedMerge(a,b.next);
+        }
+        return result;
+    }
+}

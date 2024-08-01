@@ -1,0 +1,44 @@
+package Linked List;
+
+class Solution {
+    public ListNode findMid(ListNode head){
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null &&fast.next!=null){
+            //odd and even cases respectively
+            slow=slow.next;//+1
+            fast=fast.next.next;//+2
+        }
+        return slow;//slow is middle
+    }
+    public boolean isPalindrome(ListNode head) {
+         //base case
+        if(head==null||head.next==null){
+            return true;
+        }
+        //find middle element
+        ListNode midNode=findMid(head);
+        //reverse 2nd half
+        ListNode prev=null;
+        ListNode curr=midNode;
+        ListNode next;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        //right half head
+        ListNode right=prev;
+        ListNode left=head;
+        //check left half and right half
+        while(right!=null){
+            if(left.val !=right.val){
+                return false;
+            }
+            left=left.next;
+            right=right.next;
+        }
+        return true;
+    }
+}

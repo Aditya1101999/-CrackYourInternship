@@ -1,0 +1,17 @@
+package Linked List;
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+         ListNode slo=head;
+        ListNode fas=head;
+        //for even and odd linked list
+        while(fas!=null && fas.next!=null){
+            slo=slo.next;//+1
+            fas=fas.next.next;//+1
+            if(slo==fas){
+                return true;//cycle exists
+            }
+        }
+        return false;
+    }
+}

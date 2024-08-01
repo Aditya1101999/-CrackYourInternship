@@ -1,0 +1,22 @@
+package Linked List;
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode a, ListNode b) {
+        ListNode result=null;
+        if(a==null){
+            return b;
+        }
+        else if(b==null){
+            return a;
+        }
+        if(a.val<b.val){
+            result=a;
+            result.next=mergeTwoLists(a.next,b);
+        }
+        else{
+            result=b;
+            result.next=mergeTwoLists(a,b.next);
+        }
+        return result;
+    }
+}

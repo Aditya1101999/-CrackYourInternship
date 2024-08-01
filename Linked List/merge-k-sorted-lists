@@ -1,0 +1,38 @@
+package Linked List;
+
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        return partition(lists,0,lists.length-1);
+    }
+    public static ListNode partition(ListNode[] lists,int s ,int e){
+        if(s==e){
+            return lists[s];
+        }
+        if(s<e){
+            
+        int mid=(s+e)/2;
+        ListNode l1=partition(lists,s,mid);
+        ListNode l2=partition(lists,mid+1,e);
+        return helper(l1,l2);
+        }
+        return null;
+    }
+    public static ListNode helper(ListNode a,ListNode b){
+        ListNode result=null;
+        if(a==null){
+            return b;
+        }
+        else if(b==null){
+            return a;
+        }
+        if(a.val<b.val){
+            result=a;
+            result.next=helper(a.next,b);
+        }
+        else{
+            result=b;
+            result.next=helper(a,b.next);
+        }
+        return result;
+    }
+}

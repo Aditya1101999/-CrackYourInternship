@@ -1,0 +1,21 @@
+package Tree;
+
+class Solution {
+    int count=0;
+    int result=Integer.MAX_VALUE;
+    public int kthSmallest(TreeNode root, int k) {
+        KthSmallest(root,k);
+        return result;
+    }
+     public void KthSmallest(TreeNode root,int k) {
+        if (root == null) {
+            return ;
+        }
+        KthSmallest(root.left,k);
+        count++;
+        if(count==k){
+            result=root.val;
+        }
+        KthSmallest(root.right,k);
+     }
+}

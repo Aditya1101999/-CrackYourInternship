@@ -1,0 +1,17 @@
+package Tree;
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        ArrayList<Integer>arr=new ArrayList<>();
+            getInorder(root,arr);
+        return arr;
+         }
+    public void getInorder(TreeNode root, ArrayList<Integer> arr){
+            if(root==null){
+                return;
+            }
+            getInorder(root.left,arr);
+            arr.add(root.val);
+            getInorder(root.right,arr);
+        }
+}

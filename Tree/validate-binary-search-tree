@@ -1,0 +1,22 @@
+package Tree;
+
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        TreeNode min=null;
+        TreeNode max=null;
+        return isValidBst(root,min,max);
+    }
+    public boolean isValidBst(TreeNode root,TreeNode min,TreeNode max){
+        if(root==null){
+            return true;
+        }
+        if(min!=null&&root.val<=min.val){
+            return false;
+        }
+        else if(max!=null&&root.val>=max.val){
+            return false;
+        }
+        return isValidBst(root.left,min,root)
+                &&isValidBst(root.right,root,max);
+    }
+}

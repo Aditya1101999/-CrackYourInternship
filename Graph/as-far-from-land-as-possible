@@ -1,0 +1,40 @@
+package Graph;
+
+class Solution {
+    public int maxDistance(int[][] grid) {
+        int m=grid.length;
+        int n=grid[0].length;
+        boolean[][] visited=new boolean[m][n];
+        Queue<int[]>q=new LinkedList<>();
+        boolean water=false;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1){
+                    q.add(new int[]{i,j,0});
+                    visited[i][j]=true;
+                }
+                else water=true;
+            }
+        }
+        if(!water || q.isEmpty()) return -1;
+        int level=0;
+        int[] dRow={-1,0,1,0};
+        int[] dCol={0,1,0,-1};
+        while(!q.isEmpty()){
+            int row=q.peek()[0];
+            int col=q.peek()[1];
+            int curr=q.peek()[2];
+            level=Math.max(level,curr);
+            q.poll();
+            for(int j=0;j<4;j++){
+                int nrow=row+dRow[j];
+                int ncol=col+dCol[j];
+                if(nrow>=0 && nrow<m && ncol>=0 && ncol<m && !visited[nrow][ncol] && grid[nrow][ncol]==0){
+                    visited[nrow][ncol]=true;
+                    q.add(new int[]{nrow,ncol,curr+1});
+                } 
+            }
+        }
+        return level;
+    }
+}

@@ -1,0 +1,15 @@
+package Arrays;
+
+class Solution {
+    public int maxProfit(int[] arr) {
+        int min=arr[0];
+        int maxProfit=0;
+        int n= arr.length;
+        for(int i=1;i<n;i++){
+            int profit=arr[i]-min;
+            maxProfit=Math.max(maxProfit,profit);
+            min=Math.min(min,arr[i]);
+        }
+        return maxProfit;
+    }
+}

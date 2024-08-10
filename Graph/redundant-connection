@@ -1,0 +1,42 @@
+class Solution {
+    class DSU{
+        int[] rank;
+        int[] parent;
+        public DSU(int n){
+            rank=new int[n+1];
+            parent=new int[n+1];
+            for(int i=1;i<=n;i++){
+                parent[i]=i;
+            }
+        }
+        public int findPar(int u){
+            if(parent[u]==u) return u;
+            parent[u]=findPar(parent[u]);
+            return parent[u];
+        }
+        public boolean union(int u,int v){
+            int uPar=findPar(u);
+            int vPar=findPar(v);
+            if(uPar==vPar) return false;
+            if(rank[uPar]>rank[vPar]){
+                parent[vPar]=uPar;
+            }
+            else if(rank[vPar]>rank[uPar]){
+                parent[uPar]=vPar;
+            }
+            else{
+                parent[uPar]=vPar;
+                rank[vPar]++;
+            }
+            return true;
+        }
+    }
+    public int[] findRedundantConnection(int[][] edges) {
+        int n=edges.length;
+        DSU dsu=new DSU(n);
+        for(int[] edge : edges){
+            if(!dsu.union(edge[0],edge[1])) return edge;
+        }
+        return new int[]{};
+    }
+}

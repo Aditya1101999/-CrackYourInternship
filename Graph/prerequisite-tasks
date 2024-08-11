@@ -1,0 +1,38 @@
+class Solution {
+    public boolean isPossible(int numCourses,int n, int[][] prerequisites)
+    {
+        ArrayList<ArrayList<Integer>>graph=new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int i=0;i<n;i++){
+            graph.get(prerequisites[i][0]).add(prerequisites[i][1]);//directed graph
+        }
+        int[] inDegree=new int[numCourses];
+        for(int i=0;i<numCourses;i++){
+            for(int node: graph.get(i)){
+                inDegree[node]++;//increasing freq
+            }
+        }
+        Queue<Integer>q=new LinkedList<>();
+        for(int i=0;i<numCourses;i++){
+            if(inDegree[i]==0){
+                q.add(i);
+            }
+        }
+        ArrayList<Integer>ans=new ArrayList<>();
+        int index=0;
+        while(!q.isEmpty()){
+            int node=q.remove();
+            ans.add(node);
+            for(int i :graph.get(node)){
+                inDegree[i]--;//decreasing the freq of removed nodes
+                if(inDegree[i]==0){
+                    q.add(i);
+                }
+            }
+        }
+        return ans.size()==numCourses;
+    }
+    
+}

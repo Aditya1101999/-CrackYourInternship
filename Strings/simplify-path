@@ -1,0 +1,31 @@
+class Solution {
+   public String simplifyPath(String path) {
+    String[] parts = path.split("/");
+    Stack<String> stack = new Stack<>();
+    for (String part : parts) {
+        if (part.equals(".") || part.isEmpty()) {
+            // skip current directory and empty parts
+        } else if (part.equals("..")) {
+            if (!stack.isEmpty()) {
+                // go up one level
+                stack.pop();
+            }
+        } else {
+            // add directory name to stack
+            stack.push(part);
+        }
+    }
+    // build canonical path from stack
+    StringBuilder sb = new StringBuilder("/");
+    while (!stack.isEmpty()) {//index 1->most recently added directory name appears first in the path
+        sb.insert(1, stack.pop() + "/");// sb = "/baz/bar/foo/"
+    }
+    // remove trailing slash if not root directory
+    if (sb.length() > 1 && sb.charAt(sb.length()-1) == '/') {
+        sb.setLength(sb.length()-1);
+    }
+    return sb.toString();
+}
+
+
+}

@@ -1,0 +1,27 @@
+class Solution {
+    public Node flatten(Node head) {
+        if(head==null) return null;
+        
+        Node curr=head;
+        while(curr!=null){
+            if(curr.child!=null){
+                //store refernce of curr.next
+                Node next=curr.next;
+                curr.next=flatten(curr.child);
+                curr.next.prev=curr;
+                curr.child=null;
+                //move to terminal node in child's level
+                while(curr.next!=null){
+                    curr=curr.next;
+                }
+                //connect terminal node to previously stored next
+               if(next!=null){
+                   curr.next=next;
+                   next.prev=curr;
+               }
+            }
+            curr=curr.next;
+        }
+        return head;
+    }
+}

@@ -1,0 +1,13 @@
+class Solution {
+    //(x + nums[i]) = (nums[n-1-i] - y) =>(x+y)=> nums[n-1-i] - nums[i]
+    public int minMoves2(int[] nums) {
+        Arrays.sort(nums);
+        int start=0;
+        int end=nums.length-1;
+        int ans=0;
+        while(start<end){
+            ans+=nums[end--]-nums[start++];
+        }
+        return ans;
+    }
+}

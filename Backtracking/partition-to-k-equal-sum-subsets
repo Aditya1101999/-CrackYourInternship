@@ -1,0 +1,23 @@
+class Solution {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int n=nums.length;
+        int sum=Arrays.stream(nums).sum();
+        if(sum%k!=0 || n<k) return false;
+        boolean[] visited=new boolean[n];
+        return solve(nums,k,0,visited,0,sum/k);
+    }
+    private boolean solve(int[] nums,int k,int index,boolean[] visited,int currSum,int targetSum){
+        if(k==0) return true;
+        
+        if(currSum==targetSum) return solve(nums,k-1,0,visited,0,targetSum);
+        
+        for(int i=index;i<nums.length;i++){
+            if(!visited[i] && currSum+nums[i]<=targetSum){
+                visited[i]=true;
+                if(solve(nums,k,i+1,visited,currSum+nums[i],targetSum)) return true;
+                visited[i]=false;
+            }
+        }
+        return false;
+    }
+}

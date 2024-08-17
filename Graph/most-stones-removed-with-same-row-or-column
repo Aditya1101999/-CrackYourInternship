@@ -1,0 +1,55 @@
+class Solution {
+    class DSU{
+        int[] rank;
+        int[] parent;
+        public DSU(int n){
+            rank=new int[n+1];
+            parent=new int[n+1];
+            for(int i=1;i<=n;i++){
+                parent[i]=i;
+            }
+        }
+        public int findPar(int u){
+            if(parent[u]==u) return u;
+            parent[u]=findPar(parent[u]);
+            return parent[u];
+        }
+        public boolean union(int u,int v){
+            int uPar=findPar(u);
+            int vPar=findPar(v);
+            if(uPar==vPar) return false;
+            if(rank[uPar]>rank[vPar]){
+                parent[vPar]=uPar;
+            }
+            else if(rank[vPar]>rank[uPar]){
+                parent[uPar]=vPar;
+            }
+            else{
+                parent[uPar]=vPar;
+                rank[vPar]++;
+            }
+            return true;
+        }
+    }
+    public int removeStones(int[][] stones) {
+        int n=stones.length;
+        int maxRow=0;
+        int maxCol=0;
+        for(int[] stone : stones){
+            maxRow=Math.max(maxRow,stone[0]);
+            maxCol=Math.max(maxCol,stone[1]);
+        }
+        DSU dsu = new DSU(maxRow+maxCol+1);
+        Set<Integer>components=new HashSet<>();
+        for(int[] stone : stones){
+            dsu.union(stone[0],maxRow+1+stone[1]);
+            components.add(stone[0]);
+            components.add(maxRow+1+stone[1]);
+        }
+        int count=0;
+        for(int component : components){
+            if(dsu.parent[component]==component) count++;
+        }
+        return n-count;
+    }
+}

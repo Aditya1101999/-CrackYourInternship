@@ -1,0 +1,20 @@
+class Solution {
+    public int nthUglyNumber(int n) {
+        int[] dp=new int[n+1];
+        dp[1]=1;
+        int two=1;
+        int three=1;
+        int five=1;
+        for(int i=2;i<=n;i++){
+            int valueTwo=dp[two]*2;
+            int valueThree=dp[three]*3;
+            int valueFive=dp[five]*5;
+            int minVal=Math.min(valueTwo,Math.min(valueThree,valueFive));
+            dp[i]=minVal;
+            if(valueTwo==minVal) two++;
+            if(valueThree==minVal) three++;
+            if(valueFive==minVal) five++;
+        }
+        return dp[n];
+    }
+}

@@ -1,0 +1,47 @@
+class Solution {
+    public int strStr(String txt, String pat) {
+        int[] lps=lps(pat);
+        int first=0;
+        int second=0;
+        while(first<txt.length()){
+            if(txt.charAt(first)==pat.charAt(second)){
+                first++;
+                second++;
+            }
+            if(second==pat.length()){
+               return first-second;
+            }
+            else if (first<txt.length() && txt.charAt(first) != pat.charAt(second)) {
+                if(second==0) first++;
+                else{
+                    second=lps[second-1];
+                }
+            }
+        }
+        return -1;
+    }
+    int[] lps(String s) {
+        int n=s.length();
+        int[] prefixSuffix=new int[n];
+        int pre=0;
+        int suff=1;
+        while(suff<n){
+            if(s.charAt(pre)==(s.charAt(suff))){
+                prefixSuffix[suff]=pre+1;
+                pre++;
+                suff++;
+            }
+            else{
+                if(pre==0){
+                    prefixSuffix[suff]=0;
+                    suff++;
+                }
+                else{
+                    pre=prefixSuffix[pre-1];
+                }
+            }
+        }
+        return prefixSuffix;
+    }
+    
+}

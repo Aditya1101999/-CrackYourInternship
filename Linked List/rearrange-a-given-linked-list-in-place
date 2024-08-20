@@ -1,0 +1,37 @@
+class Solution {
+    public void reorderList(ListNode head) {
+        ListNode slow=head;
+        ListNode fast=head.next;
+        while(fast!=null &&fast.next!=null){
+            //odd and even cases respectively
+            slow=slow.next;//+1
+            fast=fast.next.next;//+2
+        }
+        ListNode mid=slow;//slow is middle
+        //reverse 2nd half
+        ListNode curr=mid.next;
+        mid.next=null;//dividing the list into two
+        ListNode prev=null;
+        ListNode next;
+
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        ListNode left=head;
+        ListNode right=prev;
+        ListNode nextLeft , nextRight;
+        //zig-zag merge
+        while(left!=null &&right!=null){
+            nextLeft=left.next;
+            left.next=right;
+            nextRight=right.next;
+            right.next=nextLeft;
+
+            left=nextLeft;
+            right=nextRight;
+        }
+    }
+}

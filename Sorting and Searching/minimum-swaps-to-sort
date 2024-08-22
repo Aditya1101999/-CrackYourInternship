@@ -1,0 +1,36 @@
+class Solution
+{
+    class Pair{
+        int first;
+        int second;
+        public Pair(int first,int second){
+            this.first=first;
+            this.second=second;
+        }
+    }
+    public int minSwaps(int nums[])
+    {
+        int n=nums.length;
+       Pair[] map=new Pair[n];
+        for(int i=0;i<n;i++){
+            map[i]=new Pair(nums[i],i);
+        }
+        Arrays.sort(map,(a,b)->a.first-b.first);
+        int swaps=0;
+        int i=0;
+        while(i<n){
+            if(map[i].second!=i){
+                swap(map,map[i].second,i);
+                swaps++;
+            }
+            else i++;
+        }
+        return swaps;
+    }
+    private void swap(Pair[] arr,int i,int j){
+        Pair temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+    
+}

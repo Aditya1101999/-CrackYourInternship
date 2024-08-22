@@ -1,0 +1,15 @@
+class Solution
+{
+    int getCount(Node root,int l, int r)
+    {
+       if(root==null) return 0;
+       
+       if(root.data>=l && root.data<=r){
+           return 1+getCount(root.left,l,root.data)+getCount(root.right,root.data,r);
+       }
+       else if(root.data<l){
+           return getCount(root.right,l,r);
+       }
+       return getCount(root.left,l,r);//root.data>r
+    }
+}

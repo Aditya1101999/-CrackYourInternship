@@ -1,0 +1,48 @@
+class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        int n=nums.length;
+        int[] ans=new int[n];
+        Pair<Integer,Integer>[] numsIndices=new Pair[n];
+        for(int i=0;i<n;i++){
+            numsIndices[i]=new Pair<>(nums[i],i);
+        }
+        mergeSort(numsIndices,0,n-1,ans);
+        List<Integer>result=new ArrayList<>();
+        for(int el : ans){
+            result.add(el);
+        }
+        return result;
+    }
+    public void mergeSort(Pair<Integer,Integer>[] arr,int si,int ei,int[] ans){
+        if(si<ei) {
+            int mid = si + (ei - si) / 2;//to avoid overflow
+            mergeSort(arr, si, mid,ans);//left
+            mergeSort(arr, mid + 1, ei,ans);//right
+            merge(arr, si, mid, ei,ans);
+        }
+    }
+    private void merge(Pair<Integer,Integer>[] nums,int low,int mid,int high,int[] ans){
+        ArrayList<Pair<Integer,Integer>> temp = new ArrayList<>(); 
+        int left = low, right = mid+1; 
+        while(left <= mid && right<=high) {
+            if(nums[left].getKey()>nums[right].getKey()) {
+                ans[nums[left].getValue()]+=high-right+1;
+                temp.add(nums[left++]); 
+            }
+            else {
+                temp.add(nums[right++]); 
+            }
+        }
+        
+        while(left<=mid) {
+            temp.add(nums[left++]); 
+        }
+        while(right<=high) {
+            temp.add(nums[right++]); 
+        }
+        
+        for(int i = low; i<=high;i++) {
+            nums[i] = temp.get(i - low); 
+        }
+    }
+}

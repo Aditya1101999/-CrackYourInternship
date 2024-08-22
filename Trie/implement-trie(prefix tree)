@@ -1,0 +1,63 @@
+class Trie {
+    class TrieNode{
+        TrieNode[] children=new TrieNode[26];
+        boolean endWith=false;
+        public TrieNode(){
+            Arrays.fill(children,null);
+        }
+        boolean containsKey(char ch){
+            return children[ch-'a']!=null;
+        }
+        void put(char ch,TrieNode node){
+            children[ch-'a']=node;
+        }
+        TrieNode get(char ch){
+            return children[ch-'a'];
+        }
+        void setEnd(){
+            endWith=true;
+        }
+        boolean isEnd(){
+            return endWith;
+        }
+    }
+    private TrieNode root;
+
+    public Trie() {
+        root=new TrieNode();
+    }
+    
+    public void insert(String word) {
+        TrieNode node=root;
+        for(int i=0;i<word.length();i++){
+            if(!node.containsKey(word.charAt(i))){//insert
+                node.put(word.charAt(i),new TrieNode());
+            }
+            node=node.get(word.charAt(i));
+        }
+        node.setEnd();
+    }
+    
+    public boolean search(String word) {
+        TrieNode node=root;
+        for(int i=0;i<word.length();i++){
+            if(!node.containsKey(word.charAt(i))){
+                return false;
+            }
+            node=node.get(word.charAt(i));
+        }
+        return node.isEnd();
+        
+    }
+    
+    public boolean startsWith(String word) {
+        TrieNode node=root;
+        for(int i=0;i<word.length();i++){
+            if(!node.containsKey(word.charAt(i))){
+                return false;
+            }
+            node=node.get(word.charAt(i));
+        }
+        return true;//not necessary that prefix is ending
+    }
+}

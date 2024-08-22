@@ -1,0 +1,69 @@
+class WordDictionary {
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean endWith = false;
+
+        public TrieNode() {
+            Arrays.fill(children, null);
+        }
+
+        boolean containsKey(char ch) {
+            return children[ch - 'a'] != null;
+        }
+
+        void put(char ch, TrieNode node) {
+            children[ch - 'a'] = node;
+        }
+
+        TrieNode get(char ch) {
+            return children[ch - 'a'];
+        }
+
+        void setEnd() {
+            endWith = true;
+        }
+
+        boolean isEnd() {
+            return endWith;
+        }
+    }
+
+    private TrieNode root;
+
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+
+    public void addWord(String word) {
+        TrieNode node = root;
+        for (int i = 0; i < word.length(); i++) {
+            if (!node.containsKey(word.charAt(i))) {// insert
+                node.put(word.charAt(i), new TrieNode());
+            }
+            node = node.get(word.charAt(i));
+        }
+        node.setEnd();
+    }
+
+    public boolean search(String word) {
+        return search(word,root);
+    }
+    private boolean search(String word,TrieNode root){
+        TrieNode node = root;
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) == '.') {
+                for (TrieNode child : node.children) {
+                    if (child != null && search(word.substring(i + 1),child)) {
+                        return true;
+                    }
+                }
+                return false; 
+            } else if (!node.containsKey(word.charAt(i))) {
+                return false;
+            }
+            node = node.get(word.charAt(i));
+        }
+        return node.isEnd();
+    }
+
+}

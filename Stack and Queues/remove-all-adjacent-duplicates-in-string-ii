@@ -1,0 +1,26 @@
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        Stack<Pair<Character,Integer>>st=new Stack<>();
+        for(char c : s.toCharArray()){
+            if(st.isEmpty() || st.peek().getKey()!=c){
+                st.add(new Pair<>(c,1));
+            }
+            else{
+                Pair<Character,Integer>curr=st.pop();
+                int freq=curr.getValue()+1;
+                if(freq<k){
+                    st.add(new Pair<>(c,freq));
+                } 
+            }
+        }
+        StringBuilder ans=new StringBuilder();
+        for(Pair<Character,Integer> pair : st){
+            char c = pair.getKey();
+            int freq = pair.getValue();
+            while(freq-->0){
+                ans.append(c);
+            }
+        }
+        return ans.toString();
+    }
+}

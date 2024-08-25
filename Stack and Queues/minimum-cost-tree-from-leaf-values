@@ -1,0 +1,18 @@
+class Solution {
+    public int mctFromLeafValues(int[] arr) {
+        Stack<Integer>st=new Stack<>();
+        int ans=0;
+        st.add(Integer.MAX_VALUE);//for cases when arr[i]>=last element of stack
+        //make a monotonically decreasing stack
+        for(int i=0;i<arr.length;i++){
+            while(!st.isEmpty() && arr[i]>=st.peek()){
+                ans+=st.pop()*Math.min(arr[i],st.peek());
+            }
+            st.push(arr[i]);
+        }
+        while(st.size()>2){
+            ans+=st.pop()*st.peek();
+        }
+        return ans;
+    }
+}

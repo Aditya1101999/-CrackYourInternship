@@ -1,0 +1,46 @@
+class GFG {
+
+    static class Stack {
+        Deque<Integer> d = new LinkedList<>();
+
+        public void push(int element) {
+            d.addLast(element);
+        }
+
+        public int size() {
+            return d.size();
+        }
+
+        public void pop() {
+            d.removeLast();
+        }
+
+        public void display() {
+            for (int value : d) {
+                System.out.print(value + " ");
+            }
+        }
+    }
+
+    static class Queue {
+        Deque<Integer> d = new LinkedList<>();
+
+        public void enqueue(int element) {
+            d.addLast(element);
+        }
+
+        public void dequeue() {
+            d.removeFirst();
+        }
+
+        public void display() {
+            for (int value : d) {
+                System.out.print(value + " ");
+            }
+        }
+
+        public int size() {
+            return d.size();
+        }
+    }
+}

@@ -1,0 +1,37 @@
+class RandomizedCollection {
+    Map<Integer,Set<Integer>>map;
+    List<Integer>list;
+    Random rand;
+    public RandomizedCollection() {
+        map=new HashMap<>();
+        list=new ArrayList<>();
+        rand=new Random();
+    }
+    
+    public boolean insert(int val) {
+        Set<Integer>set=map.getOrDefault(val,new LinkedHashSet<>());
+        set.add(list.size());
+        map.put(val,set);
+        list.add(val);
+        return set.size()==1;
+    }  
+    public boolean remove(int val) {
+        if(!map.containsKey(val)||map.get(val).size()==0){
+            return false;
+        }
+        int last=list.get(list.size()-1);
+        int index=map.get(val).iterator().next();
+        map.get(val).remove(index);
+        list.set(index,last);
+        map.get(last).add(index);
+        map.get(last).remove(list.size()-1);
+        list.remove(list.size()-1);
+        return true;
+    }
+    
+    public int getRandom() {
+        int size=list.size();
+        int index=rand.nextInt(size);//random no. till range of list's size
+        return list.get(index);
+    }
+}

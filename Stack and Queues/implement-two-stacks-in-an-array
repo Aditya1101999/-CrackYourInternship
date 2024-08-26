@@ -1,0 +1,42 @@
+class twoStacks {
+    int[] arr;
+    int left;
+    int right;
+    int n;
+    twoStacks() {
+        n=100;
+        arr=new int[n];
+        left=0;
+        right=n-1;
+    }
+
+    // Function to push an integer into the stack1.
+    void push1(int x) {
+        arr[left]=x;
+        left++;
+    }
+
+    // Function to push an integer into the stack2.
+    void push2(int x) {
+        arr[right]=x;
+        right--;
+    }
+
+    // Function to remove an element from top of the stack1.
+    int pop1() {
+        if(left>0){
+            left--;
+            return arr[left];
+        }
+        return -1;
+    }
+
+    // Function to remove an element from top of the stack2.
+    int pop2() {
+        if(right<n-1){
+            right++;
+            return arr[right];
+        }
+        return -1;
+    }
+}

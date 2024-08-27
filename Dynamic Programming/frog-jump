@@ -1,0 +1,28 @@
+class Solution {
+    public boolean canCross(int[] stones) {
+        int n = stones.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(stones[i], i);
+        }
+        Boolean[][] dp = new Boolean[n][n + 1]; 
+        return solve(stones, map, 0, 0, dp);
+    }
+
+    private boolean solve(int[] stones, Map<Integer, Integer> map, int index, int k, Boolean[][] dp) {
+        if (index == stones.length - 1) return true;
+
+        if (dp[index][k] != null) return dp[index][k]; 
+        
+        boolean result = false;
+        for (int nextJumps = k - 1; nextJumps <= k + 1; nextJumps++) {
+            if (nextJumps > 0) {
+                int point = stones[index] + nextJumps;
+                if (map.containsKey(point)) {
+                    result |= solve(stones, map, map.get(point), nextJumps, dp);
+                }
+            }
+        }
+        return dp[index][k] = result; 
+    }
+}

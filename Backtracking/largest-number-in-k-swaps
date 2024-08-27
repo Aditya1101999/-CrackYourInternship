@@ -1,0 +1,43 @@
+class Solution
+{
+    static String res;
+    //Function to find the largest number after k swaps.
+    public static String findMaximumNum(String str, int k){
+        res = str;
+        solve(0, str, k);
+        return res;
+    }
+
+    private static void solve(int i, String str, int k){
+        if (k == 0 || i == str.length() - 1) {
+            if (str.compareTo(res) > 0) res = str;
+            return;
+        }
+
+        char max = maxChar(str, i);
+        if (str.charAt(i) != max) k--;
+
+        for (int index = i; index < str.length(); index++) {
+            if (str.charAt(index) == max) {
+                String newStr = swap(str, i, index);
+                solve(i + 1, newStr, k);
+            }
+        }
+    }
+
+    private static char maxChar(String str, int index){
+        char max = '0';
+        for (int i = index; i < str.length(); i++) {
+            if (str.charAt(i) > max) max = str.charAt(i);
+        }
+        return max;
+    }
+
+    private static String swap(String str, int i, int j) {
+        char[] arr = str.toCharArray();
+        char temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return new String(arr);
+    }
+}

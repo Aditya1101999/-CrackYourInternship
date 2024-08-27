@@ -1,0 +1,20 @@
+class GFG 
+{ 
+	
+	// function to calculate min cost 
+	static int minCost(int coin[], 
+					int n, int k) 
+	{ 
+		
+		Arrays.sort(coin); 
+
+		int required = (int)Math.ceil(1.0 * 
+								n / (k + 1)); 
+		int ans = 0; 
+		
+		for (int i = 0; i < required; i++) 
+			ans += coin[i]; 
+
+		return ans; 
+	} 
+}

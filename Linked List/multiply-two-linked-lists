@@ -1,0 +1,16 @@
+class Solution {
+    public long multiplyTwoLists(Node first, Node second) {
+        int mod=(int)1e9+7;
+        long a=0L;
+        long b=0L;
+        while(first!=null){
+            a=(a*10+(long)first.data)%mod;
+            first=first.next;
+        }
+        while(second!=null){
+            b=(b*10+(long)second.data)%mod;
+            second=second.next;
+        }
+        return (a*b)%mod;
+    }
+}

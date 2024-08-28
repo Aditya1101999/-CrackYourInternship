@@ -1,0 +1,16 @@
+class Solution
+{
+    public static boolean isDeadEnd(Node root)
+    {
+        return solve(root,0,Integer.MAX_VALUE);
+    }
+    private static boolean solve(Node root,int min,int max){
+        if(root==null){
+            return false;
+        }
+        if(root.data-min==1 && root.data+1==max){
+            return true;
+        }
+        return solve(root.left,min,root.data) || solve(root.right,root.data,max);
+    }
+}

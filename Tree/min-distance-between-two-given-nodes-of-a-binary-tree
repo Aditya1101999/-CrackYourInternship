@@ -1,0 +1,27 @@
+class GfG {
+    static int ans;
+    int findDist(Node root, int a, int b) {
+        ans=0;
+        solve(root,a,b);
+        return ans;
+    }
+    int solve(Node root,int a,int b){
+        if(root==null) return 0;
+        
+        int left=solve(root.left,a,b);
+        int right=solve(root.right,a,b);
+        
+        if(root.data==a || root.data==b){
+            if(left>0 || right>0){
+                ans=Math.max(left,right);
+            }
+            else{
+                return 1;
+            }
+        }
+        if(left>0 && right>0){// found the lca
+            ans=left+right;
+        }
+        return (left>0 || right>0) ? Math.max(left,right)+1 : 0;
+    }
+}

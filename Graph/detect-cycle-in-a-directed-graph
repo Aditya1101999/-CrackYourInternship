@@ -1,0 +1,30 @@
+class Solution {
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(int numCourses, ArrayList<ArrayList<Integer>> graph) {
+       int[] inDegree=new int[numCourses];
+        for(int i=0;i<numCourses;i++){
+            for(int node: graph.get(i)){
+                inDegree[node]++;//increasing freq
+            }
+        }
+        Queue<Integer>q=new LinkedList<>();
+        for(int i=0;i<numCourses;i++){
+            if(inDegree[i]==0){
+                q.add(i);
+            }
+        }
+        ArrayList<Integer>ans=new ArrayList<>();
+        int index=0;
+        while(!q.isEmpty()){
+            int node=q.remove();
+            ans.add(node);
+            for(int i :graph.get(node)){
+                inDegree[i]--;//decreasing the freq of removed nodes
+                if(inDegree[i]==0){
+                    q.add(i);
+                }
+            }
+        }
+        return ans.size()!=numCourses;
+    }
+}

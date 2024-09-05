@@ -1,0 +1,50 @@
+public int[][] minCashFlow(int[][] t, int n) {
+        // code here
+        int m[][]=new int[n][n];
+        PriorityQueue<Node> neg=new PriorityQueue<>(n, new Comparator<Node>(){
+           public int compare(Node a, Node b){
+               return a.data-b.data;
+           } 
+        });
+        PriorityQueue<Node> pos=new PriorityQueue<>(n, new Comparator<Node>(){
+           public int compare(Node a, Node b){
+               return b.data-a.data;
+           } 
+        });
+        ArrayList<Integer> arr=new ArrayList<>(Collections.nCopies(n,0));
+        //Arrays.fill(arr,0);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                int diff=t[j][i]-t[i][j];
+                arr.set(i,arr.get(i)+diff);
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(arr.get(i)==0){
+                
+            }else if(arr.get(i)>0){
+                pos.add(new Node(i,arr.get(i)));
+            }else{
+                neg.add(new Node(i,arr.get(i)));
+            }
+        }
+        while(pos.isEmpty()==false && neg.isEmpty()==false){
+            Node min=neg.poll();
+            Node max=pos.poll();
+            //System.out.println(min.data+" "+max.data);
+            int amount=0,debt=min.key,credit=max.key,trans=min.data+max.data;
+            if(trans==0){
+                amount=max.data;
+            }else if(trans<0){
+                amount=max.data;
+                neg.add(new Node(min.key,trans));
+            }else{
+                 amount=-min.data;
+                pos.add(new Node(max.key,trans));
+            }
+           // System.out.println(min.key+" "+max.key+" ="+amount);
+            m[min.key][max.key]=amount;
+        }
+        return m;
+        
+    }

@@ -1,0 +1,61 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        while (t-- > 0) {
+            int m = sc.nextInt();
+            int n = sc.nextInt();
+            m--;
+            n--;
+            
+            long[] x = new long[m + 1];
+            long[] y = new long[n + 1];
+            long[][] dp = new long[m + 1][n + 1];
+            
+            for (int i = 1; i <= m; i++) {
+                x[i] = sc.nextLong();
+            }
+            for (int i = 1; i <= n; i++) {
+                y[i] = sc.nextLong();
+            }
+            
+            Arrays.sort(x, 1, m + 1);
+            Arrays.sort(y, 1, n + 1);
+        
+            reverse(x, 1, m);
+            reverse(y, 1, n);
+            
+            dp[0][0] = 0;
+            for (int i = 1; i <= m; i++) {
+                dp[i][0] = x[i] + dp[i - 1][0];
+            }
+            for (int i = 1; i <= n; i++) {
+                dp[0][i] = y[i] + dp[0][i - 1];
+            }
+            for (int i = 1; i <= m; i++) {
+                for (int j = 1; j <= n; j++) {
+                    long t1 = dp[i - 1][j] + x[i] * (j + 1);
+                    long t2 = dp[i][j - 1] + y[j] * (i + 1);
+                    dp[i][j] = Math.min(t1, t2);
+                }
+            }
+            
+            System.out.println(dp[m][n]);
+        }
+    }
+    
+    private static void reverse(long[] arr, int start, int end) {
+        while (start < end) {
+            long temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
